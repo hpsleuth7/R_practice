@@ -2,6 +2,11 @@ watchlist_agg <- function(watchlist=NULL,boro=FALSE) {
 # Usage: takes dataframe of landlord watchlist, optional borough flag
 #        returns new dataframe aggregated by landlord with sum and avg of viols+bldgs
 
+  library(dplyr)
+  library(stringr)
+###
+
+
   aggregated <- watchlist
   if (class(boro)[1]=="character") {
     aggregated <- filter(aggregated,borough == boro)
