@@ -1,10 +1,11 @@
 watchlist_agg <- function(watchlist=NULL,boro=FALSE) {
-# Usage: takes dataframe of landlord watchlist, optional borough flag
-#        returns new dataframe aggregated by landlord with sum and avg of viols+bldgs
+  # Usage: takes dataframe of landlord watchlist, optional borough flag
+	"Brooklyn" / "Queens" / "Manhattan" / "Bronx" / "Staten Island"
+  #    returns new dataframe aggregated by landlord with sum and avg of viols+bldgs
 
   library(dplyr)
   library(stringr)
-###
+  ###
 
 
   aggregated <- watchlist
@@ -28,4 +29,22 @@ watchlist_agg <- function(watchlist=NULL,boro=FALSE) {
   return(aggregated)
 
 }
+
+landlord_top_ten <- function(landlords=NULL) {
+  # Usage: takes dataframe of watchlist records aggregated by landlord
+  #	returns ordered dataframe of ten landlords with most violations
+
+  library(dplyr)
+  ###
+
+  top_ten <- arrange(landlords,desc(total_viol)) %>%
+    head(n=10) %>%
+    mutate(landlord_name=str_remove(landlord_name,"Properties"),
+      landlord_name=forcats::fct_reorder(landlord_name,total_viol))
+
+return(top_ten)
+
+}
+
+
 
