@@ -22,6 +22,10 @@ gap_life_exp <- gapminder %>%
 gap_life_exp <- gap_life_exp %>%  #order factors by life_exp, inc
   mutate(country=fct_reorder(country,life_exp))
 
-
-export to csv
+#export to csv
 write_csv(gap_life_exp,"max_life_exp.csv")
+
+#practice writing and reading datafram as R binary file
+saveRDS(gap_life_exp,"max_life_exp.rds")
+rm(gap_life_exp)
+gap_life_exp <- readRDS("max_life_exp.rds")
