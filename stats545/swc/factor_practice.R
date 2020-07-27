@@ -27,6 +27,13 @@ test <-
   mutate(across(where(is.factor),fct_drop))
 levels(test$country)
 
-gapminder$continent %>% 
+### Practice re-ordering factors ###
+
+gapminder$continent %>%  # continent by order of frequency
   fct_infreq() %>% 
   levels()
+
+fct_reorder(gapminder$country,gapminder$lifeExp,min) %>%  # country by min lifeExp
+  levels()
+
+
