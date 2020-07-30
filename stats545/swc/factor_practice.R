@@ -36,4 +36,14 @@ gapminder$continent %>%  # continent by order of frequency
 fct_reorder(gapminder$country,gapminder$lifeExp,min) %>%  # country by min lifeExp
   levels()
 
+### Recode levels ###
+
+some_countries <- gapminder %>% 
+  filter(country %in% c("Australia","Korea, Dem. Rep.","Korea, Rep.")) %>% 
+  droplevels()
+
+some_countries$country <- fct_recode(some_countries$country,
+    "Oz"="Australia","South Korea"= "Korea, Dem. Rep.","North Korea"="Korea, Rep.")
+
+
 
