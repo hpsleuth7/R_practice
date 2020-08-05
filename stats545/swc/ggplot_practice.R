@@ -11,9 +11,22 @@ p+geom_point()+scale_x_log10()
 
 p <- p+scale_x_log10()  #keep the scale that worked well!
 
-p <- p+aes(color=continent)  #color by continent
-print(p+geom_point())     #print method works with ggplot objects
+p+aes(color=continent)  #color by continent
+print(p+geom_point()+aes(color=continent))     #print method works with ggplot objects
 
-p+geom_point(alpha=1/3,size=3)  #try out transparency and size
+p+geom_point(alpha=1/3,size=3)+aes(color=continent)  #try out transparency and size
 
-p+geom_point()+geom_smooth(lwd=3,se=FALSE)
+p+geom_point()+geom_smooth(lwd=3,se=FALSE) #try out smoothing function
+
+p+geom_point()+geom_smooth(lwd=3,se=FALSE)+facet_wrap(~continent) #facet by continent
+
+ggplot(gapminder)+   #plot year and lifeExp with help of randomness
+  aes(x=year,y=lifeExp)+
+  geom_jitter(alpha=1/3,size=3)+
+  aes(color=continent)
+
+ggplot(gapminder,aes(x=year,y=lifeExp,color=continent))+  # plot same w continent facets
+  geom_jitter(alpha=1/3,size=3)+
+  facet_wrap(~continent,scales = "free_x")+     #scales allow the facet scales
+  scale_color_manual(values=continent_colors)   # to vary from one another by dim
+
