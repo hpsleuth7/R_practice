@@ -30,3 +30,16 @@ ggplot(gapminder,aes(x=year,y=lifeExp,color=continent))+  # plot same w continen
   facet_wrap(~continent,scales = "free_x")+     #scales allow the facet scales
   scale_color_manual(values=continent_colors)   # to vary from one another by dim
 
+
+# line plot showing each country's lifeExp over time, by continent
+gapminder %>% 
+  #filter(continent!="Oceania") %>% 
+  ggplot()+
+  aes(x=year,y=lifeExp,group=country,color=country)+
+  geom_line(lwd=1, show.legend=FALSE)+
+  facet_wrap(.~continent)+
+  scale_color_manual(values=country_colors)+
+  theme_bw()+
+  theme(strip.text=element_text(size=rel(1.1)))
+
+
