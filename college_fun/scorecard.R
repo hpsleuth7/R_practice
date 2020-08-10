@@ -12,8 +12,15 @@ ggplot(dat)+
   geom_smooth(se=FALSE)+
   aes(color=hbcu)
 
-ggplot(dat)+
+ggplot(dat)+          #admit rate against 4-year grad, color by % Black
   aes(x=adm_rate,y=c150_4)+
   geom_point()+
   geom_smooth(se=FALSE)+
   aes(color=ugds_black)
+
+#plot top ten admit rates of schools > 20,000 undergrads
+dat$instnm<-fct_reorder(factor(dat$instnm),dat$adm_rate)
+dat %>% filter(ugds>20000) %>%  arrange(desc(adm_rate)) %>% head(10) %>% 
+  ggplot()+
+  aes(x=adm_rate,y=instnm)+
+  geom_bar(stat="identity")
