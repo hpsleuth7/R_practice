@@ -69,3 +69,13 @@ gapminder %>%
   aes(x=year,y=lifeExp,group=country,color=country)+
   geom_point()+
   geom_line()
+
+
+#strip plot of lifeExp for each continent, with median added in blue
+gapminder %>% 
+  filter(year>1995) %>% 
+  ggplot()+
+  aes(x=continent,y=lifeExp)+
+  geom_jitter(position=position_jitter(width=0.1,height=0),
+              alpha=1/2,color="purple")+
+  stat_summary(fun.y="median",color="blue",geom="point",size=4)
