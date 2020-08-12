@@ -33,7 +33,7 @@ ggplot(gapminder,aes(x=year,y=lifeExp,color=continent))+  # plot same w continen
 
 # line plot showing each country's lifeExp over time, by continent
 gapminder %>% 
-  #filter(continent!="Oceania") %>% 
+  filter(continent!="Oceania") %>% 
   ggplot()+
   aes(x=year,y=lifeExp,group=country,color=country)+
   geom_line(lwd=1, show.legend=FALSE)+
@@ -42,4 +42,30 @@ gapminder %>%
   theme_bw()+
   theme(strip.text=element_text(size=rel(1.1)))
 
+#dot plot showing lifeExp over time with a trendline, for each continent
+gapminder %>% 
+  filter(continent!="Oceania") %>% 
+  ggplot()+
+  aes(x=year,y=lifeExp,color=continent)+
+  geom_point(alpha=1/3,size=2,position="jitter")+
+  geom_smooth(lwd=2,se=FALSE)+
+  facet_wrap(.~continent)+
+  scale_color_manual(values = continent_colors) #this seems to just make it darker
 
+#line plot of lifeExp over time for Zimbabwe
+gapminder %>% 
+  filter(country=="Zimbabwe") %>% 
+  ggplot()+
+  aes(x=year,y=lifeExp)+
+  geom_point()+
+  geom_line()
+
+# line plot of lifeExp for several countries
+gapminder$country <- fct_reorder2(         #reorder country factors for legend
+    gapminder$country,gapminder$year,gapminder$lifeExp)
+gapminder %>% 
+  filter(country %in% c("Zimbabwe","Cambodia","Canada","Japan")) %>% 
+  ggplot()+
+  aes(x=year,y=lifeExp,group=country,color=country)+
+  geom_point()+
+  geom_line()
