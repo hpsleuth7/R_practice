@@ -78,4 +78,27 @@ gapminder %>%
   aes(x=continent,y=lifeExp)+
   geom_jitter(position=position_jitter(width=0.1,height=0),
               alpha=1/2,color="purple")+
-  stat_summary(fun.y="median",color="blue",geom="point",size=4)
+  stat_summary(fun="median",color="blue",geom="point",size=4)
+
+#histogram of all lifeExp values
+ggplot(gapminder)+
+  aes(x=lifeExp)+
+  geom_histogram(binwidth = 1)
+
+ggplot(gapminder)+    #make a weird overlaid histogram -- this plots multiple graphs!
+  aes(x=lifeExp,fill=continent)+     # a different approach to faceting
+  geom_histogram(binwidth = 1,position="identity")
+
+ggplot(gapminder)+    #frequency polygon = connecting bin midpoints in histogram
+  aes(x=lifeExp,color=continent)+     #good for overlaying!
+  geom_freqpoly(binwidth = 3)
+
+gapminder %>% 
+  filter(continent!="Oceania") %>% 
+  ggplot()+  # density plot = probability density function for variable =  
+    aes(x=lifeExp,fill=continent)+   # histogram with area under curve = 1!
+    geom_density(adjust=1,alpha=.25)
+
+ggplot(gapminder)+
+  aes(x=year,y=lifeExp,group=year)+
+  geom_boxplot()
