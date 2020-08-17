@@ -99,6 +99,14 @@ gapminder %>%
     aes(x=lifeExp,fill=continent)+   # histogram with area under curve = 1!
     geom_density(adjust=1,alpha=.25)
 
+#box plot lifeExp for each year measured
 ggplot(gapminder)+
   aes(x=year,y=lifeExp,group=year)+
   geom_boxplot()
+
+#fun
+ggplot(gapminder)+
+  aes(x=year,y=lifeExp)+
+  geom_violin(aes(group=year))+
+  geom_jitter(alpha=1/3)+
+  geom_smooth(se=FALSE)
