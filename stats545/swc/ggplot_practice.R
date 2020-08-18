@@ -110,3 +110,20 @@ ggplot(gapminder)+
   geom_violin(aes(group=year))+
   geom_jitter(alpha=1/3)+
   geom_smooth(se=FALSE)
+
+### Univariate factor viz!###
+
+#simple bar chart of continents
+gapminder$continent <- fct_rev(fct_infreq(gapminder$continent))
+ggplot(gapminder)+
+  aes(x=continent)+
+  geom_bar(width=.1)+       # default stat for geom_bar() is frequency of value
+  coord_flip()              # flip axes
+
+# create bar chart from pre-tabulated data-- omg!!
+continent_freq <- gapminder %>% count(continent)
+ggplot(continent_freq)+
+  aes(x=continent,y=n)+
+  geom_bar(stat="identity")
+
+
