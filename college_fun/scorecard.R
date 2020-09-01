@@ -1,9 +1,8 @@
 # Fun with 2019 college scorecard data
 
 library(tidyverse)
-
 dat <- read_csv('data/MERGED2018_19_PP.csv',col_names = TRUE,
-                col_types = 'iiiccciiiilddiiiiiiiddi-ddddddddddiidddddddd')
+           col_types = 'iiiccciiiilddiiiiiiiddi-ddddddddddiidddddddd')
 
 # plot admit rate against 4-year grad rate, color for HBCU
 ggplot(dat)+
@@ -24,3 +23,14 @@ dat %>% filter(ugds>20000) %>%  arrange(desc(adm_rate)) %>% head(10) %>%
   ggplot()+
   aes(x=adm_rate,y=instnm)+
   geom_bar(stat="identity")
+
+
+# make predominant degree into factor
+dat <- dat %>% 
+  mutate(preddeg=ifelse(preddeg==0,"Not classified",
+      ifelse(preddeg==1,"Certificate degree",
+      ifelse(preddeg==2,"Associate's degree",
+      ifelse(preddeg==3,"Bachelor's degree",
+      ifelse(preddeg==4,"Graduate degree",-1
+  ))))))
+dat$preddeg <- factor(dat$preddeg)
